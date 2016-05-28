@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Нету обработки на ввод символов в JTextField
 public class AddFundsForm extends JFrame {
 
     private JPanel rootPanel;
@@ -16,6 +17,18 @@ public class AddFundsForm extends JFrame {
 
     public AddFundsForm() {
         super("Add Funds");
+        createAddFundsForm();
+    }
+
+    public static double getSum() {
+        return sum;
+    }
+
+    public static void setSum(double sum) {
+        AddFundsForm.sum = +sum;
+    }
+
+    private void createAddFundsForm() {
         setContentPane(rootPanel);
         pack();
         setResizable(false);
@@ -42,8 +55,6 @@ public class AddFundsForm extends JFrame {
                 if (addedMoney == 0.1 || addedMoney == 0.2 || addedMoney == 0.5 || addedMoney == 1 || addedMoney == 2
                         || addedMoney == 5 || addedMoney == 10 || addedMoney == 20) {
                     sum += addedMoney;
-                    //setSum(addedMoney);
-                    //MainForm mainForm = new MainForm().setAddedMoney(String.valueOf(addedMoney));
                     textField.setText("");
                     totalMoney.setText(String.valueOf(sum));
                 } else {
@@ -73,13 +84,5 @@ public class AddFundsForm extends JFrame {
                 dispose();
             }
         });
-    }
-
-    public static double getSum() {
-        return sum;
-    }
-
-    public static void setSum(double sum) {
-        AddFundsForm.sum = +sum;
     }
 }

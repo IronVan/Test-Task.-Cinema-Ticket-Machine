@@ -1,5 +1,7 @@
 package view;
 
+import common.Listeners;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +20,10 @@ public class MainForm extends JFrame {
 
     public MainForm() {
         super("Cinema Ticket Machine");
+        createMainForm();
+    }
 
+    private void createMainForm() {
         setContentPane(rootPanel);
         pack();
         setSize(500, 300);
@@ -26,7 +31,6 @@ public class MainForm extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-
         labelAddedMoney.setText("Total money: " + AddFundsForm.getSum());
 
         buttonAddFunds.addActionListener(new ActionListener() {
@@ -39,15 +43,16 @@ public class MainForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (AddFundsForm.getSum() == 0) {
                     JOptionPane.showMessageDialog(null, "Thanks for visit");
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Take your money: " + AddFundsForm.getSum());
                     AddFundsForm.setSum(0);
                 }
             }
         });
-    }
 
-/*    public static void setAddedMoney(final String text){
-        labelAddedMoney.setText(text);
-    }*/
+        VIPSeatButton.addActionListener(new Listeners());
+        frontStallsButton.addActionListener(new Listeners());
+        middleStallsButton.addActionListener(new Listeners());
+        backStallsButton.addActionListener(new Listeners());
+    }
 }
