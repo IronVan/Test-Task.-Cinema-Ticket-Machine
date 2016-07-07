@@ -7,7 +7,7 @@ public class Runner {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new MainForm();
+                MainForm.getMainForm();
             }
         });
     }

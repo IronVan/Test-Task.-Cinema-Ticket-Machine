@@ -1,26 +1,43 @@
 package view;
 
-import common.Listeners;
+import common.kitchen.BackStall;
+import common.kitchen.FrontStall;
+import common.kitchen.MiddleStall;
+import common.kitchen.VIPSeat;
+import common.listeners.MainFormListeners;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainForm extends JFrame {
 
-    private JPanel panel1;
-    private JButton buttonCancel;
-    private JButton buttonAddFunds;
-    private JButton VIPSeatButton;
-    private JButton frontStallsButton;
-    private JButton middleStallsButton;
-    private JButton backStallsButton;
-    private JPanel rootPanel;
+    private JPanel panel1; //don't need
+    public JButton buttonCancel;
+    public JButton buttonAddFunds;
+    public JButton VIPSeatButton;
+    public JButton frontStallsButton;
+    public JButton middleStallsButton;
+    public JButton backStallsButton;
+    public JPanel rootPanel;
     public JLabel labelAddedMoney;
+    public JLabel labelVipSeatQuantity;
+    public JLabel labelFrontStallsQuantity;
+    public JLabel labelMiddleStallsQuantity;
+    public JLabel labelBackStallsQuantity;
 
-    public MainForm() {
+    private MainForm() {
         super("Cinema Ticket Machine");
         createMainForm();
+    }
+
+    private static MainForm mainForm;
+
+    public static MainForm getMainForm() {
+
+        if (mainForm == null) {
+            mainForm = new MainForm();
+            return mainForm;
+        }
+        return mainForm;
     }
 
     private void createMainForm() {
@@ -31,28 +48,20 @@ public class MainForm extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        labelAddedMoney.setText("Total money: " + AddFundsForm.getSum());
+        labelAddedMoney.setText("Added funds: " + AddFundsForm.getSum());
 
-        buttonAddFunds.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new AddFundsForm();
-            }
-        });
+        labelVipSeatQuantity.setText(String.valueOf(VIPSeat.getVipSeat().getQuantity()));
+        labelMiddleStallsQuantity.setText(String.valueOf(MiddleStall.getMiddleStall().getQuantity()));
+        labelFrontStallsQuantity.setText(String.valueOf(FrontStall.getFrontStall().getQuantity()));
+        labelBackStallsQuantity.setText(String.valueOf(BackStall.getBackStall().getQuantity()));
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (AddFundsForm.getSum() == 0) {
-                    JOptionPane.showMessageDialog(null, "Thanks for visit");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Take your money: " + AddFundsForm.getSum());
-                    AddFundsForm.setSum(0);
-                }
-            }
-        });
+        MainFormListeners mainFormListeners = new MainFormListeners(this);
 
-        VIPSeatButton.addActionListener(new Listeners());
-        frontStallsButton.addActionListener(new Listeners());
-        middleStallsButton.addActionListener(new Listeners());
-        backStallsButton.addActionListener(new Listeners());
+        buttonAddFunds.addActionListener(mainFormListeners);
+        buttonCancel.addActionListener(mainFormListeners);
+        VIPSeatButton.addActionListener(mainFormListeners);
+        frontStallsButton.addActionListener(mainFormListeners);
+        middleStallsButton.addActionListener(mainFormListeners);
+        backStallsButton.addActionListener(mainFormListeners);
     }
 }
